@@ -1,5 +1,6 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'components/horizontal_listview.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,8 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
@@ -141,7 +142,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView(
         children: <Widget>[
-          image_carousel
+          image_carousel,
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Text('Categories'),
+          ),
+          HorizontalList()
         ],
       ),
     );
