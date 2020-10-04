@@ -1,3 +1,4 @@
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,8 +25,28 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    Widget image_carousel = Container(
+      height: 200,
+      child: Carousel(
+        boxFit: BoxFit.cover,
+        images: [
+          AssetImage('images/camisa.jpg'),
+          AssetImage('images/jeans.jfif'),
+          AssetImage('images/jeans2.jfif'),
+          AssetImage('images/vestidos.jpg'),
+        ],
+        autoplay: true,
+        animationCurve: Curves.fastOutSlowIn,
+        animationDuration: Duration(
+          milliseconds: 1000
+        ),
+        dotSize: 4,
+        indicatorBgPadding: 2,
+      )
+    );
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         backgroundColor: Colors.red,
         title: Text("E-commerce App"),
         actions: [
@@ -97,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {},
               child: ListTile(
                 title: Text('Favourites'),
-                leading: Icon(Icons.favorite),
+                leading: Icon(Icons.favorite, color: Colors.red),
               ),
             ),
             Divider(),
@@ -105,28 +126,23 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {},
               child: ListTile(
                 title: Text('Settings'),
-                leading: Icon(Icons.settings),
+                leading: Icon(Icons.settings, color: Colors.blue),
               ),
             ),
             InkWell(
               onTap: () {},
               child: ListTile(
-                title: Text('Help'),
-                leading: Icon(Icons.help),
+                title: Text('About'),
+                leading: Icon(Icons.help, color: Colors.green),
               ),
             ),
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Bienvenido',
-            ),
-          ],
-        ),
+      body: ListView(
+        children: <Widget>[
+          image_carousel
+        ],
       ),
     );
   }
