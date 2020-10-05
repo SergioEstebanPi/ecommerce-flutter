@@ -155,7 +155,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Container(
             height: 500,
-            color: Colors.grey,
             child: Products(
 
             )

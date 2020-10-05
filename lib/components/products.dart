@@ -32,6 +32,24 @@ class _ProductsState extends State<Products> {
       'picture': 'images/vestidos.jpg',
       'old_price': 25,
       'price': 16
+    },
+    {
+      'name': 'Vestidos2',
+      'picture': 'images/vestidos.jpg',
+      'old_price': 25,
+      'price': 16
+    },
+    {
+      'name': 'Vestidos3',
+      'picture': 'images/vestidos.jpg',
+      'old_price': 25,
+      'price': 16
+    },
+    {
+      'name': 'Vestidos4',
+      'picture': 'images/vestidos.jpg',
+      'old_price': 25,
+      'price': 16
     }
   ];
   @override
@@ -90,29 +108,34 @@ class Product extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 footer: Container(
-                  color: Colors.white70,
-                  child: ListTile(
-                    leading: Text(
-                        productName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold
+                  color: Colors.white,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                            productName,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16
+                            ),
                         ),
-                    ),
-                    title: Text(
-                      '\$$productPrice',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.w800
                       ),
-                    ),
-                    subtitle: Text(
-                    '\$$productOldPrice',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800,
-                        decoration: TextDecoration.lineThrough
+                      Text(
+                        '\$$productOldPrice',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.lineThrough
+                        ),
                       ),
-                    ),
+                      Text(
+                          '\$$productPrice',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                    ]
                   ),
                 ),
               ),
