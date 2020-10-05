@@ -11,24 +11,24 @@ class _ProductsState extends State<Products> {
   var productList = [
     {
       'name': 'camisa',
-      'picture': 'images/vestidos.jpg',
+      'picture': 'images/camisa.jpg',
       'old_price': 25,
       'price': 16
     },
     {
       'name': 'camisa1',
-      'picture': 'images/vestidos.jpg',
+      'picture': 'images/jeans.jfif',
       'old_price': 25,
       'price': 16
     },
     {
-      'name': 'camisa2',
-      'picture': 'images/vestidos.jpg',
+      'name': 'jeans2',
+      'picture': 'images/jeans.jfif',
       'old_price': 25,
       'price': 16
     },
     {
-      'name': 'camisa3',
+      'name': 'Vestidos',
       'picture': 'images/vestidos.jpg',
       'old_price': 25,
       'price': 16
