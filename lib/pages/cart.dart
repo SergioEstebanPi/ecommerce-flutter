@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/components/cart_products.dart';
 import 'package:flutter/material.dart';
 
 class Cart extends StatefulWidget {
@@ -12,7 +13,9 @@ class _CartState extends State<Cart> {
       appBar: AppBar(
         elevation: 0.1,
         backgroundColor: Colors.red,
-        title: Text("Cart"),
+        title: Text(
+            "Cart",
+        ),
         actions: [
           IconButton(
               icon: Icon(Icons.search, color: Colors.white),
@@ -20,6 +23,7 @@ class _CartState extends State<Cart> {
           )
         ],
       ),
+      body: CartProducts(),
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Row(
