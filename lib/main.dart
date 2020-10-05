@@ -2,6 +2,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'components/horizontal_listview.dart';
 import 'components/products.dart';
+import 'pages/cart.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
+        elevation: 0.1,
         backgroundColor: Colors.red,
         title: Text("E-commerce App"),
         actions: [
@@ -59,7 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           IconButton(
               icon: Icon(Icons.shopping_cart, color: Colors.white),
-              onPressed: null
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Cart()
+                  )
+                );
+              }
           )
         ],
       ),
@@ -104,7 +112,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Cart()
+                    )
+                );
+              },
               child: ListTile(
                 title: Text('Shopping cart'),
                 leading: Icon(Icons.shopping_cart,color: Colors.red),

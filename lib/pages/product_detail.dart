@@ -35,17 +35,13 @@ class _ProductDetailState extends State<ProductDetail> {
                   )
               );
             },
-            child: Text("E-commerce App")
+            child: Text("Product details")
         ),
         actions: [
           IconButton(
               icon: Icon(Icons.search, color: Colors.white),
               onPressed: null
           ),
-          IconButton(
-              icon: Icon(Icons.shopping_cart, color: Colors.white),
-              onPressed: null
-          )
         ],
       ),
       body: ListView(
