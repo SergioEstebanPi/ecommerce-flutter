@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerceapp/pages/product_detail.dart';
 
 class Products extends StatefulWidget {
   @override
@@ -15,19 +16,19 @@ class _ProductsState extends State<Products> {
       'price': 16
     },
     {
-      'name': 'camisa',
+      'name': 'camisa1',
       'picture': 'images/vestidos.jpg',
       'old_price': 25,
       'price': 16
     },
     {
-      'name': 'camisa',
+      'name': 'camisa2',
       'picture': 'images/vestidos.jpg',
       'old_price': 25,
       'price': 16
     },
     {
-      'name': 'camisa',
+      'name': 'camisa3',
       'picture': 'images/vestidos.jpg',
       'old_price': 25,
       'price': 16
@@ -75,7 +76,14 @@ class Product extends StatelessWidget {
           tag: productName,
           child: Material(
             child: InkWell(
-              onTap: () {},
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => ProductDetail(
+                  productDetailName: productName,
+                  productDetailPrice: productPrice,
+                  productDetailOldPrice: productOldPrice,
+                  productDetailPicture: productPicture,
+                ))
+              ),
               child: GridTile(
                 child: Image.asset(
                   productPicture,
