@@ -157,23 +157,26 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: ListView(
+      body: Column(
         children: <Widget>[
           image_carousel,
           Padding(
-            padding: EdgeInsets.all(8),
-            child: Text('Categories'),
+            padding: EdgeInsets.all(4),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text('Categories'),
+            ),
           ),
           HorizontalList(),
           Padding(
-            padding: EdgeInsets.all(20),
-            child: Text('Recent products'),
+            padding: EdgeInsets.all(8),
+            child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text('Recent products')
+            ),
           ),
-          Container(
-            height: 500,
-            child: Products(
-
-            )
+          Flexible(
+            child: Products()
           )
         ],
       ),

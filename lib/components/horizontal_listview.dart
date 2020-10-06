@@ -50,12 +50,12 @@ class Category extends StatelessWidget {
       child: InkWell(
         onTap: () {},
         child: Container(
-          width: 100,
+          width: 80,
           child: ListTile(
             title: Image.asset(
               imageLocation,
-              width: 100,
-              height: 60,
+              width: 40,
+              height: 40,
             ),
             subtitle: Container(
               alignment: Alignment.topCenter,
