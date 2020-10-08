@@ -99,17 +99,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
-      elevation: 0.1,
-      backgroundColor: Colors.white,
-      centerTitle: true,
-      title: Text(
-        'Login',
-        style: TextStyle(
-          color: Colors.red.shade900
-        ),
-      ),
-      ),
       body: Stack(
         children: [
           Image.asset(
@@ -129,126 +118,163 @@ class _LoginState extends State<Login> {
               alignment: Alignment.center,
               child: Center(
                 child: Form(
-                  child: Column(
                     key: _formKey,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white.withOpacity(0.5),
-                          elevation: 0,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 12
-                            ),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'Email',
-                                icon: Icon(Icons.alternate_email),
+                    child: ListView(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white.withOpacity(0.5),
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12
                               ),
-                              keyboardType: TextInputType.emailAddress,
-                              controller: _emailTextController,
-                              // ignore: missing_return
-                              validator: (value) {
-                                if (value.isNotEmpty) {
-                                  Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                                  RegExp regex = RegExp(pattern);
-                                  if (!regex.hasMatch(value)) {
-                                    return 'Please make sure your email address is valid';
-                                  } else {
-                                    return 'null';
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  hintText: 'Email',
+                                  icon: Icon(Icons.alternate_email),
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                controller: _emailTextController,
+                                // ignore: missing_return
+                                validator: (value) {
+                                  if (value.isNotEmpty) {
+                                    Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                    RegExp regex = RegExp(pattern);
+                                    if (!regex.hasMatch(value)) {
+                                      return 'Please make sure your email address is valid';
+                                    } else {
+                                      return 'null';
+                                    }
                                   }
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white.withOpacity(0.8),
-                          elevation: 0,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 12
-                            ),
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'Password',
-                                icon: Icon(Icons.lock_outline),
+                                },
                               ),
-                              keyboardType: TextInputType.visiblePassword,
-                              controller: _passwordTextController,
-                              // ignore: missing_return
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'The password field cannot be empty';
-                                } else if(value.length < 6) {
-                                  return 'The password has to be at least 6 characters';
-                                }
-                              },
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.red,
-                          child: MaterialButton(
-                            onPressed: (){
-                              Fluttertoast.showToast(msg: 'ok');
-                            },
-                            minWidth: MediaQuery.of(context).size.width,
-                            child: Text(
-                              'Login',
-                              textAlign: TextAlign.center,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white.withOpacity(0.8),
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  hintText: 'Password',
+                                  icon: Icon(Icons.lock_outline),
+                                ),
+                                keyboardType: TextInputType.visiblePassword,
+                                controller: _passwordTextController,
+                                // ignore: missing_return
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'The password field cannot be empty';
+                                  } else if(value.length < 6) {
+                                    return 'The password has to be at least 6 characters';
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Material(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.red,
+                              child: MaterialButton(
+                                onPressed: (){
+                                  Fluttertoast.showToast(msg: 'ok');
+                                },
+                                minWidth: MediaQuery.of(context).size.width,
+                                child: Text(
+                                  'Login',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20
+                                  ),
+                                ),
+                              )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Forgot password',
+                            style: TextStyle(
+                                color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Expanded(child: Container()),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RichText(
+                            text: TextSpan(
                               style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16
                               ),
-                            ),
-                          )
-                        ),
-                      ),
-                      Expanded(child: Container()),
-                      Divider(
-                        color: Colors.white,
-                      ),
-                      Text(
-                          'Other login in option',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Material(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.red.shade900,
-                            child: MaterialButton(
-                              onPressed: (){
-                                handleSignIn();
-                              },
-                              minWidth: MediaQuery.of(context).size.width,
-                              child: Text(
-                                'Google',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18
+                              children: [
+                                TextSpan(
+                                  text: 'Don\'t have an account? click here to'
                                 ),
-                              ),
+                                TextSpan(
+                                  text: ' sign up!',
+                                  style: TextStyle(
+                                    color: Colors.red
+                                  )
+                                ),
+                              ]
                             )
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                        Divider(
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Other login in option',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Material(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.red.shade900,
+                              child: MaterialButton(
+                                onPressed: (){
+                                  handleSignIn();
+                                },
+                                minWidth: MediaQuery.of(context).size.width,
+                                child: Text(
+                                  'Google',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18
+                                  ),
+                                ),
+                              )
+                          ),
+                        ),
+                      ],
+                    )
                 ),
               ),
             ),
