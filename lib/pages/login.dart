@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -14,6 +15,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   final auth.FirebaseAuth firebaseAuth = auth.FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
   SharedPreferences preferences;
   bool loading = false;
   bool isLogedin = false;
@@ -35,9 +39,6 @@ class _LoginState extends State<Login> {
     );
     auth.UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
     auth.User firebaseUser = userCredential.user;
-    Fluttertoast.showToast(msg: "" + userCredential.toString());
-    Fluttertoast.showToast(msg: "" + firebaseUser.displayName);
-    //User firebaseUser = () as User;
     if(firebaseUser != null){
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection("users")
@@ -53,23 +54,28 @@ class _LoginState extends State<Login> {
             .set({
               "id": firebaseUser.uid,
               "username": firebaseUser.displayName,
-              "profilePicture": firebaseUser.photoURL
+              "photoURL": firebaseUser.photoURL
             });
         await preferences.setString("id", firebaseUser.uid);
         await preferences.setString("username", firebaseUser.displayName);
-        await preferences.setString("profilePicture", firebaseUser.photoURL);
+        await preferences.setString("photoURL", firebaseUser.photoURL);
       } else {
         await preferences.setString("id", documents[0]['id']);
         await preferences.setString("username", documents[0]['username']);
-        await preferences.setString("profilePicture", documents[0]['photoUrl']);
+        await preferences.setString("photoURL", documents[0]['photoURL']);
       }
       Fluttertoast.showToast(msg: "Login was successful");
       setState(() {
         loading: false;
       });
-
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          )
+      );
     } else {
-      Fluttertoast.showToast(msg: "You are not logged");
+      Fluttertoast.showToast(msg: "Login failed :(");
     }
   }
   void isSignedIn() async {
@@ -106,26 +112,152 @@ class _LoginState extends State<Login> {
       ),
       body: Stack(
         children: [
-          Center(
-            child: FlatButton(
-              color: Colors.red.shade900,
-              onPressed: () {
-                handleSignIn();
-                Fluttertoast.showToast(msg: "click");
-              },
-              child: Text(
-                'Sign In/ Sign Up with Google',
-                style: TextStyle(
-                  color: Colors.white
+          Image.asset(
+            'images/familia.jpg',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            width: double.infinity,
+            height: double.infinity,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 200),
+            child: Container(
+              alignment: Alignment.center,
+              child: Center(
+                child: Form(
+                  child: Column(
+                    key: _formKey,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white.withOpacity(0.5),
+                          elevation: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 12
+                            ),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: 'Email',
+                                icon: Icon(Icons.alternate_email),
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                              controller: _emailTextController,
+                              // ignore: missing_return
+                              validator: (value) {
+                                if (value.isNotEmpty) {
+                                  Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                  RegExp regex = RegExp(pattern);
+                                  if (!regex.hasMatch(value)) {
+                                    return 'Please make sure your email address is valid';
+                                  } else {
+                                    return 'null';
+                                  }
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white.withOpacity(0.8),
+                          elevation: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 12
+                            ),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: 'Password',
+                                icon: Icon(Icons.lock_outline),
+                              ),
+                              keyboardType: TextInputType.visiblePassword,
+                              controller: _passwordTextController,
+                              // ignore: missing_return
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'The password field cannot be empty';
+                                } else if(value.length < 6) {
+                                  return 'The password has to be at least 6 characters';
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.red,
+                          child: MaterialButton(
+                            onPressed: (){
+                              Fluttertoast.showToast(msg: 'ok');
+                            },
+                            minWidth: MediaQuery.of(context).size.width,
+                            child: Text(
+                              'Login',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20
+                              ),
+                            ),
+                          )
+                        ),
+                      ),
+                      Expanded(child: Container()),
+                      Divider(
+                        color: Colors.white,
+                      ),
+                      Text(
+                          'Other login in option',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Material(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.red.shade900,
+                            child: MaterialButton(
+                              onPressed: (){
+                                handleSignIn();
+                              },
+                              minWidth: MediaQuery.of(context).size.width,
+                              child: Text(
+                                'Google',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18
+                                ),
+                              ),
+                            )
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-
             ),
           ),
           Visibility(
             visible: loading ?? true,
             child: Container(
-              color: Colors.white.withOpacity(0.7),
+              alignment: Alignment.center,
+              color: Colors.white.withOpacity(0.9),
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation(Colors.red),
               ),
