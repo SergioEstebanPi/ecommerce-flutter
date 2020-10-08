@@ -1,102 +1,23 @@
-import 'package:ecommerceapp/pages/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'home.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
-class Login extends StatefulWidget {
+class Signup extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _SignupState createState() => _SignupState();
 }
 
-class _LoginState extends State<Login> {
+class _SignupState extends State<Signup> {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   final auth.FirebaseAuth firebaseAuth = auth.FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
-  SharedPreferences preferences;
+  TextEditingController _confirmPasswordTextController = TextEditingController();
+  TextEditingController _nameTextController = TextEditingController();
+  String gender;
   bool loading = false;
-  bool isLogedin = false;
-  @override
-  void initState(){
-    super.initState();
-    isSignedIn();
-  }
-  Future handleSignIn() async{
-    preferences = await SharedPreferences.getInstance();
-    setState(() {
-      loading = true;
-    });
-    GoogleSignInAccount googleUser = await googleSignIn.signIn();
-    GoogleSignInAuthentication googleSignInAuthentication = await googleUser.authentication;
-    final auth.AuthCredential credential = auth.GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication .accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-    auth.UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
-    auth.User firebaseUser = userCredential.user;
-    if(firebaseUser != null){
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection("users")
-          .where(
-            "id",
-            isEqualTo: firebaseUser.uid
-        ).get();
-      final List<DocumentSnapshot> documents = result.docs;
-      if(documents.length == 0) {
-        // insert the user to our collection
-        FirebaseFirestore.instance.collection("users")
-            .doc(firebaseUser.uid)
-            .set({
-              "id": firebaseUser.uid,
-              "username": firebaseUser.displayName,
-              "photoURL": firebaseUser.photoURL
-            });
-        await preferences.setString("id", firebaseUser.uid);
-        await preferences.setString("username", firebaseUser.displayName);
-        await preferences.setString("photoURL", firebaseUser.photoURL);
-      } else {
-        await preferences.setString("id", documents[0]['id']);
-        await preferences.setString("username", documents[0]['username']);
-        await preferences.setString("photoURL", documents[0]['photoURL']);
-      }
-      Fluttertoast.showToast(msg: "Login was successful");
-      setState(() {
-        loading: false;
-      });
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
-          )
-      );
-    } else {
-      Fluttertoast.showToast(msg: "Login failed :(");
-    }
-  }
-  void isSignedIn() async {
-    Fluttertoast.showToast(msg: "Firebase login");
-    preferences = await SharedPreferences.getInstance();
-    isLogedin = await googleSignIn.isSignedIn();
-    if(isLogedin){
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomePage(),
-          )
-      );
-    } else {
-      Fluttertoast.showToast(msg: "You are not lg");
-    }
-    setState(() {
-      loading: false;
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,8 +55,37 @@ class _LoginState extends State<Login> {
                               ),
                               child: TextFormField(
                                 decoration: InputDecoration(
+                                  hintText: 'Name',
+                                  icon: Icon(Icons.person_outline),
+                                ),
+                                keyboardType: TextInputType.name,
+                                controller: _nameTextController,
+                                // ignore: missing_return
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'The name field cannot be empty';
+                                  } else {
+                                    return 'null';
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white.withOpacity(0.5),
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
                                   hintText: 'Email',
-                                  icon: Icon(Icons.email_outlined),
+                                  icon: Icon(Icons.alternate_email_outlined),
                                 ),
                                 keyboardType: TextInputType.emailAddress,
                                 controller: _emailTextController,
@@ -187,6 +137,35 @@ class _LoginState extends State<Login> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
                           child: Material(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white.withOpacity(0.5),
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  hintText: 'Confirm password',
+                                  icon: Icon(Icons.lock_outline),
+                                ),
+                                keyboardType: TextInputType.visiblePassword,
+                                controller: _confirmPasswordTextController,
+                                // ignore: missing_return
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'The password field cannot be empty';
+                                  } else if(value.length < 6) {
+                                    return 'The password has to be at least 6 characters';
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                          child: Material(
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.red,
                               child: MaterialButton(
@@ -195,7 +174,7 @@ class _LoginState extends State<Login> {
                                 },
                                 minWidth: MediaQuery.of(context).size.width,
                                 child: Text(
-                                  'Login',
+                                  'Sign up',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.white,
@@ -206,35 +185,17 @@ class _LoginState extends State<Login> {
                               )
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          child: Text(
-                            'Forgot password',
-                            style: TextStyle(
-                                color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
                         Expanded(child: Container()),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Signup()
-                                )
-                              );
-                            },
-                            child: Text(
-                              ' Sign up!',
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                              'Login',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.red
+                                  color: Colors.red
                               )
-                            ),
                           ),
                         ),
                         Divider(
@@ -258,7 +219,7 @@ class _LoginState extends State<Login> {
                               color: Colors.red.shade900,
                               child: MaterialButton(
                                 onPressed: (){
-                                  handleSignIn();
+                                  //handleSignIn();
                                 },
                                 minWidth: MediaQuery.of(context).size.width,
                                 child: Text(
@@ -278,18 +239,17 @@ class _LoginState extends State<Login> {
             ),
           ),
           Visibility(
-            visible: loading ?? true,
-            child: Container(
-              alignment: Alignment.center,
-              color: Colors.white.withOpacity(0.9),
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Colors.red),
-              ),
-            )
+              visible: loading ?? true,
+              child: Container(
+                alignment: Alignment.center,
+                color: Colors.white.withOpacity(0.9),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Colors.red),
+                ),
+              )
           )
         ],
       ),
     );
   }
 }
-
