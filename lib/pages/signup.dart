@@ -17,6 +17,7 @@ class _SignupState extends State<Signup> {
   TextEditingController _confirmPasswordTextController = TextEditingController();
   TextEditingController _nameTextController = TextEditingController();
   String gender;
+  String groupValue = "male";
   bool loading = false;
   @override
   Widget build(BuildContext context) {
@@ -69,6 +70,48 @@ class _SignupState extends State<Signup> {
                                   }
                                 },
                               ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                          child: Container(
+                            color: Colors.white.withOpacity(0.5),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: ListTile(
+                                    title: Text(
+                                      'male',
+                                      style: TextStyle(
+                                        color: Colors.white
+                                      ),
+                                      textAlign: TextAlign.end,
+                                    ),
+                                    trailing: Radio(
+                                        value: "male",
+                                        groupValue: groupValue,
+                                        onChanged: (e) => valueChanged(e),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ListTile(
+                                    title: Text(
+                                      'female',
+                                      style: TextStyle(
+                                          color: Colors.white
+                                      ),
+                                      textAlign: TextAlign.end,
+                                    ),
+                                    trailing: Radio(
+                                      value: "female",
+                                      groupValue: groupValue,
+                                      onChanged: (e) => valueChanged(e),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -251,5 +294,15 @@ class _SignupState extends State<Signup> {
         ],
       ),
     );
+  }
+
+  valueChanged(e) {
+    setState(() {
+      if(e == "male"){
+        groupValue = e;
+      } else if(e == "female"){
+        groupValue = "female";
+      }
+    });
   }
 }
