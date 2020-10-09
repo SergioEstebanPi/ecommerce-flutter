@@ -84,6 +84,12 @@ class _LoginState extends State<Login> {
     Fluttertoast.showToast(msg: "Firebase login");
     preferences = await SharedPreferences.getInstance();
     isLogedin = await googleSignIn.isSignedIn();
+    auth.User firebaseUser = firebaseAuth.currentUser;
+    if(firebaseUser != null){
+      setState(() {
+        isLogedin = true;
+      });
+    }
     if(isLogedin){
       Navigator.pushReplacement(
           context,
