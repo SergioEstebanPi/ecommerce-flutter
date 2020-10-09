@@ -22,6 +22,7 @@ class _LoginState extends State<Login> {
   SharedPreferences preferences;
   bool loading = false;
   bool isLogedin = false;
+  bool hidePass = true;
   @override
   void initState(){
     super.initState();
@@ -136,6 +137,7 @@ class _LoginState extends State<Login> {
                                 decoration: InputDecoration(
                                   hintText: 'Email',
                                   icon: Icon(Icons.email_outlined),
+                                  border: InputBorder.none
                                 ),
                                 keyboardType: TextInputType.emailAddress,
                                 controller: _emailTextController,
@@ -165,21 +167,35 @@ class _LoginState extends State<Login> {
                               padding: const EdgeInsets.only(
                                   left: 12
                               ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: 'Password',
-                                  icon: Icon(Icons.lock_outline),
+                              child: ListTile(
+                                title: TextFormField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    icon: Icon(Icons.lock_outline),
+                                    border: InputBorder.none
+                                  ),
+                                  keyboardType: TextInputType.visiblePassword,
+                                  controller: _passwordTextController,
+                                  obscureText: hidePass,
+                                  // ignore: missing_return
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'The password field cannot be empty';
+                                    } else if(value.length < 6) {
+                                      return 'The password has to be at least 6 characters';
+                                    }
+                                  },
                                 ),
-                                keyboardType: TextInputType.visiblePassword,
-                                controller: _passwordTextController,
-                                // ignore: missing_return
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'The password field cannot be empty';
-                                  } else if(value.length < 6) {
-                                    return 'The password has to be at least 6 characters';
-                                  }
-                                },
+                                trailing: IconButton(
+                                  icon: Icon(
+                                    Icons.remove_red_eye_outlined,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      hidePass = !hidePass;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -221,7 +237,7 @@ class _LoginState extends State<Login> {
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
                             onTap: () {
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Signup()

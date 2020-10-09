@@ -1,3 +1,5 @@
+import 'package:ecommerceapp/db/users.dart';
+import 'package:ecommerceapp/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,12 +14,15 @@ class _SignupState extends State<Signup> {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   final auth.FirebaseAuth firebaseAuth = auth.FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
+  UserServices _userServices = UserServices();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _confirmPasswordTextController = TextEditingController();
   TextEditingController _nameTextController = TextEditingController();
   String gender;
   String groupValue = "male";
+  bool hidePass = true;
+  bool hideConfirmPass = true;
   bool loading = false;
   @override
   Widget build(BuildContext context) {
@@ -58,6 +63,7 @@ class _SignupState extends State<Signup> {
                                 decoration: InputDecoration(
                                   hintText: 'Name',
                                   icon: Icon(Icons.person_outline),
+                                  border: InputBorder.none
                                 ),
                                 keyboardType: TextInputType.name,
                                 controller: _nameTextController,
@@ -66,7 +72,7 @@ class _SignupState extends State<Signup> {
                                   if (value.isEmpty) {
                                     return 'The name field cannot be empty';
                                   } else {
-                                    return 'null';
+                                    return null;
                                   }
                                 },
                               ),
@@ -82,9 +88,9 @@ class _SignupState extends State<Signup> {
                                 Expanded(
                                   child: ListTile(
                                     title: Text(
-                                      'male',
+                                      'Male',
                                       style: TextStyle(
-                                        color: Colors.white
+                                        color: Colors.black
                                       ),
                                       textAlign: TextAlign.end,
                                     ),
@@ -98,9 +104,9 @@ class _SignupState extends State<Signup> {
                                 Expanded(
                                   child: ListTile(
                                     title: Text(
-                                      'female',
+                                      'Female',
                                       style: TextStyle(
-                                          color: Colors.white
+                                          color: Colors.black
                                       ),
                                       textAlign: TextAlign.end,
                                     ),
@@ -129,6 +135,7 @@ class _SignupState extends State<Signup> {
                                 decoration: InputDecoration(
                                   hintText: 'Email',
                                   icon: Icon(Icons.alternate_email_outlined),
+                                  border: InputBorder.none,
                                 ),
                                 keyboardType: TextInputType.emailAddress,
                                 controller: _emailTextController,
@@ -140,7 +147,7 @@ class _SignupState extends State<Signup> {
                                     if (!regex.hasMatch(value)) {
                                       return 'Please make sure your email address is valid';
                                     } else {
-                                      return 'null';
+                                      return null;
                                     }
                                   }
                                 },
@@ -158,21 +165,37 @@ class _SignupState extends State<Signup> {
                               padding: const EdgeInsets.only(
                                   left: 12
                               ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: 'Password',
-                                  icon: Icon(Icons.lock_outline),
+                              child: ListTile(
+                                title: TextFormField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    icon: Icon(Icons.lock_outline),
+                                    border: InputBorder.none
+                                  ),
+                                  keyboardType: TextInputType.visiblePassword,
+                                  controller: _passwordTextController,
+                                  obscureText: hidePass,
+                                  // ignore: missing_return
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'The password field cannot be empty';
+                                    } else if(value.length < 6) {
+                                      return 'The password has to be at least 6 characters';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
                                 ),
-                                keyboardType: TextInputType.visiblePassword,
-                                controller: _passwordTextController,
-                                // ignore: missing_return
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'The password field cannot be empty';
-                                  } else if(value.length < 6) {
-                                    return 'The password has to be at least 6 characters';
-                                  }
-                                },
+                                trailing: IconButton(
+                                  icon: Icon(
+                                      Icons.remove_red_eye_outlined,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      hidePass = !hidePass;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -187,21 +210,39 @@ class _SignupState extends State<Signup> {
                               padding: const EdgeInsets.only(
                                   left: 12
                               ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: 'Confirm password',
-                                  icon: Icon(Icons.lock_outline),
+                              child: ListTile(
+                                title: TextFormField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Confirm password',
+                                    icon: Icon(Icons.lock_outline),
+                                    border: InputBorder.none
+                                  ),
+                                  keyboardType: TextInputType.visiblePassword,
+                                  controller: _confirmPasswordTextController,
+                                  obscureText: hideConfirmPass,
+                                  // ignore: missing_return
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'The password field cannot be empty';
+                                    } else if(value.length < 6) {
+                                      return 'The password has to be at least 6 characters';
+                                    } else if (_passwordTextController.text != value){
+                                      return 'The passwords do not match';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
                                 ),
-                                keyboardType: TextInputType.visiblePassword,
-                                controller: _confirmPasswordTextController,
-                                // ignore: missing_return
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'The password field cannot be empty';
-                                  } else if(value.length < 6) {
-                                    return 'The password has to be at least 6 characters';
-                                  }
-                                },
+                                trailing: IconButton(
+                                  icon: Icon(
+                                    Icons.remove_red_eye_outlined
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      hideConfirmPass = !hideConfirmPass;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -212,8 +253,8 @@ class _SignupState extends State<Signup> {
                               borderRadius: BorderRadius.circular(20),
                               color: Colors.red,
                               child: MaterialButton(
-                                onPressed: (){
-                                  Fluttertoast.showToast(msg: 'ok');
+                                onPressed: () async {
+                                  validateForm();
                                 },
                                 minWidth: MediaQuery.of(context).size.width,
                                 child: Text(
@@ -231,7 +272,7 @@ class _SignupState extends State<Signup> {
                         Expanded(child: Container()),
                         InkWell(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.of(context).pop();
                           },
                           child: Text(
                               'Login',
@@ -298,11 +339,50 @@ class _SignupState extends State<Signup> {
 
   valueChanged(e) {
     setState(() {
-      if(e == "male"){
+      if(e == "male") {
         groupValue = e;
+        gender = e;
       } else if(e == "female"){
         groupValue = "female";
+        gender = e;
       }
     });
+  }
+
+  Future validateForm() async {
+    print('validateForm');
+    FormState formState = _formKey.currentState;
+    Map value;
+    if(formState.validate()){
+      formState.reset();
+      auth.User firebaseUser = firebaseAuth.currentUser;
+      if(firebaseUser == null) {
+        firebaseAuth.createUserWithEmailAndPassword(
+            email: _emailTextController.text,
+            password: _passwordTextController.text
+        ).then((data) =>
+        {
+          _userServices.createUser(
+            value =
+              {
+                "userId": data.user.uid,
+                "username": _nameTextController.text,
+                "email": _emailTextController.text,
+                "gender": gender,
+              }
+          )
+        }).catchError((err) => {
+          print(err.toString())
+        });
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomePage()
+            )
+        );
+      } else {
+        Fluttertoast.showToast(msg: 'User registered yet');
+      }
+    }
   }
 }
