@@ -1,5 +1,9 @@
 import 'package:ecommerceapp/commons/common.dart';
+import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/components/custom_app_bar.dart';
+import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/components/featured_products.dart';
 import 'package:ecommerceapp/pages/login.dart';
+import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/components/product_card.dart';
+import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/components/search.dart';
 import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +45,58 @@ class _HomePageState extends State<HomePage> {
         )
     );
     return Scaffold(
+      body: SafeArea(
+        child: ListView(
+          children: [
+            CustomAppBar(),
+            Search(),
+            Row(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.all(14),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Featured products'),
+                  ),
+                )
+              ],
+            ),
+            FeaturedProducts(),
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: new Text('Recent products')),
+                ),
+              ],
+            ),
+            ProductCard(
+              brand: 'SantosBrand',
+              name: 'Lux Blazer',
+              price: 24.00,
+              onSale: true,
+              picture: '',
+            ),
+            ProductCard(
+              brand: 'SantosBrand',
+              name: 'Lux Blazer',
+              price: 24.00,
+              onSale: true,
+              picture: '',
+            ),
+            ProductCard(
+              brand: 'SantosBrand',
+              name: 'Lux Blazer',
+              price: 24.00,
+              onSale: true,
+              picture: '',
+            ),
+          ],
+        ),
+      ),
+      /*
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: deepOrange
@@ -203,6 +259,7 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+      */
     );
   }
 }
