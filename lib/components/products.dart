@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/commons/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceapp/pages/product_detail.dart';
@@ -108,40 +109,38 @@ class Product extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 footer: Container(
-                  color: Colors.white,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                            productName,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
-                            ),
-                        ),
-                      ),
-                      Text(
-                        '\$$productOldPrice',
+                  color: white,
+                  height: 70,
+                  child: ListTile(
+                    title: Text(
+                        productName,
                         style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.lineThrough
+                          fontWeight: FontWeight.w800,
+                          fontSize: 18
                         ),
+                    ),
+                    subtitle: Text(
+                      '\$$productOldPrice',
+                      style: TextStyle(
+                          color: black,
+                          fontWeight: FontWeight.w800,
+                          decoration: TextDecoration.lineThrough
                       ),
-                      Text(
-                          '\$$productPrice',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold
-                          ),
-                        ),
-                    ]
+                    ),
+                    trailing:Text(
+                      '\$$productPrice',
+                      style: TextStyle(
+                          color: deepOrange,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 18
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          )
-        ),
+          ),
+        )
       ),
     );
   }

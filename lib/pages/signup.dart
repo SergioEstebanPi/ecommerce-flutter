@@ -33,9 +33,24 @@ class _SignupState extends State<Signup> {
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 0),
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 20,
+              bottom: 20,
+            ),
             child: Container(
               alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey[350],
+                      blurRadius: 20
+                  )
+                ]
+              ),
               child: Form(
                   key: _formKey,
                   child: ListView(

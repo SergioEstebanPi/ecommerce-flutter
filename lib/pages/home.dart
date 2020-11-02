@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/commons/common.dart';
 import 'package:ecommerceapp/pages/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _searchTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Widget image_carousel = Container(
@@ -37,16 +39,38 @@ class _HomePageState extends State<HomePage> {
     );
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: deepOrange
+        ),
         elevation: 0.1,
-        backgroundColor: Colors.red,
-        title: Text("E-commerce App"),
+        backgroundColor: white,
+        title: Material(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey.withOpacity(0.1),
+          elevation: 0,
+          child: TextFormField(
+              decoration: InputDecoration(
+                  hintText: 'Search...',
+                  border: InputBorder.none
+              ),
+              controller: _searchTextController,
+              // ignore: missing_return
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'The search field cannot be empty';
+                } else {
+                  return null;
+                }
+              },
+          ),
+        ),
         actions: [
           IconButton(
-              icon: Icon(Icons.search, color: Colors.white),
+              icon: Icon(Icons.search, color: deepOrange),
               onPressed: null
           ),
           IconButton(
-              icon: Icon(Icons.shopping_cart, color: Colors.white),
+              icon: Icon(Icons.shopping_cart, color: deepOrange),
               onPressed: (){
                 Navigator.push(
                     context,
@@ -164,7 +188,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           image_carousel,
           Padding(
-            padding: EdgeInsets.all(4),
+            padding: EdgeInsets.all(14),
             child: Container(
               alignment: Alignment.centerLeft,
               child: Text('Categories'),
@@ -172,7 +196,7 @@ class _HomePageState extends State<HomePage> {
           ),
           HorizontalList(),
           Padding(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(14),
             child: Container(
                 alignment: Alignment.centerLeft,
                 child: Text('Recent products')

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-MaterialColor deepOrange = Colors.deepOrange;
-MaterialColor black = Colors.black;
-MaterialColor white = Colors.white;
+Color deepOrange = Colors.deepOrange;
+Color black = Colors.black;
+Color white = Colors.white;
 
 // methods
 void changeScreen(BuildContext context, Widget widget){
