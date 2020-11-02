@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/commons/common.dart';
 import 'package:ecommerceapp/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -110,10 +111,25 @@ class _LoginState extends State<Login> {
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+              top: 120,
+              bottom: 120,
+            ),
             child: Container(
               alignment: Alignment.center,
-              child: Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey[350],
+                      blurRadius: 20
+                    )
+                  ],
+                ),
                 child: Form(
                     key: _formKey,
                     child: ListView(
@@ -211,7 +227,7 @@ class _LoginState extends State<Login> {
                           padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
                           child: Material(
                               borderRadius: BorderRadius.circular(20),
-                              color: Colors.red,
+                              color: deepOrange,
                               child: MaterialButton(
                                 onPressed: (){
                                   Fluttertoast.showToast(msg: 'ok');
@@ -237,7 +253,8 @@ class _LoginState extends State<Login> {
                               child: Text(
                                 'Forgot password',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: black,
+                                  fontWeight: FontWeight.w400
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -256,7 +273,8 @@ class _LoginState extends State<Login> {
                                 child: Text(
                                   'Create an account',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: black,
+                                      fontWeight: FontWeight.w400
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -324,7 +342,7 @@ class _LoginState extends State<Login> {
               alignment: Alignment.center,
               color: Colors.white.withOpacity(0.9),
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Colors.red),
+                valueColor: AlwaysStoppedAnimation(deepOrange),
               ),
             )
           )

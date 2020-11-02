@@ -1,3 +1,5 @@
+import 'package:ecommerceapp/commons/common.dart';
+import 'package:ecommerceapp/db/auth.dart';
 import 'package:ecommerceapp/db/users.dart';
 import 'package:ecommerceapp/pages/home.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,7 @@ class _SignupState extends State<Signup> {
   bool hidePass = true;
   bool hideConfirmPass = true;
   bool loading = false;
+  Auth authClass = Auth();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,7 +130,7 @@ class _SignupState extends State<Signup> {
                                   title: Text(
                                     'Male',
                                     style: TextStyle(
-                                        color: Colors.black
+                                        color: black
                                     ),
                                     textAlign: TextAlign.end,
                                   ),
@@ -143,7 +146,7 @@ class _SignupState extends State<Signup> {
                                   title: Text(
                                     'Female',
                                     style: TextStyle(
-                                        color: Colors.black
+                                        color: black
                                     ),
                                     textAlign: TextAlign.end,
                                   ),
@@ -254,7 +257,7 @@ class _SignupState extends State<Signup> {
                         padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
                         child: Material(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.deepOrange,
+                            color: deepOrange,
                             child: MaterialButton(
                               onPressed: () async {
                                 validateForm();
@@ -283,7 +286,7 @@ class _SignupState extends State<Signup> {
                               'I already have an account',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.deepOrange,
+                                color: deepOrange,
                                 fontSize: 16
                               )
                           ),
@@ -329,8 +332,25 @@ class _SignupState extends State<Signup> {
                             padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
                             child: Material(
                               child: MaterialButton(
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    auth.User user = await authClass.googleSignIn();
+                                    print('boton');
+                                    print(user);
+                                    if(user != null){
+                                      _userServices.createUser({
+                                        "name": user.displayName,
+                                        "email": user.email,
+                                        "phoneNumber": user.phoneNumber,
+                                        "photoURL": user.photoURL,
+                                        "userId": user.uid,
+                                      });
 
+                                      print('redirigido al home');
+                                      changeScreenReplacement(
+                                          context,
+                                          HomePage()
+                                      );
+                                    }
                                   },
                                   child: Image.asset(
                                       "images/ggg.png",
