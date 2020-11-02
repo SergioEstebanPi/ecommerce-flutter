@@ -62,6 +62,9 @@ flutter:
     - images/jeans2.jfif
     - images/vestidos.jpg
     - images/familia.jpg
+    - images/fb.png
+    - images/ggg.png
+    - images/cart.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

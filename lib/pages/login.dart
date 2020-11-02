@@ -109,19 +109,8 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset(
-            'images/familia.jpg',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          Container(
-            color: Colors.black.withOpacity(0.5),
-            width: double.infinity,
-            height: double.infinity,
-          ),
           Padding(
-            padding: const EdgeInsets.only(top: 200),
+            padding: const EdgeInsets.only(top: 50),
             child: Container(
               alignment: Alignment.center,
               child: Center(
@@ -130,35 +119,47 @@ class _LoginState extends State<Login> {
                     child: ListView(
                       children: [
                         Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Container(
+                            alignment: Alignment.topCenter,
+                            child: Image.asset(
+                              "images/cart.png",
+                              width: 120,
+                            ),
+                          ),
+                        ),
+                        Padding(
                           padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
                           child: Material(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.white.withOpacity(0.5),
+                            color: Colors.grey.withOpacity(0.2),
                             elevation: 0,
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   left: 12
                               ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: 'Email',
-                                  icon: Icon(Icons.email_outlined),
-                                  border: InputBorder.none
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                                controller: _emailTextController,
-                                // ignore: missing_return
-                                validator: (value) {
-                                  if (value.isNotEmpty) {
-                                    Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                                    RegExp regex = RegExp(pattern);
-                                    if (!regex.hasMatch(value)) {
-                                      return 'Please make sure your email address is valid';
-                                    } else {
-                                      return 'null';
+                              child: ListTile(
+                                title: TextFormField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Email',
+                                    icon: Icon(Icons.alternate_email_outlined),
+                                    border: InputBorder.none
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  controller: _emailTextController,
+                                  // ignore: missing_return
+                                  validator: (value) {
+                                    if (value.isNotEmpty) {
+                                      Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                      RegExp regex = RegExp(pattern);
+                                      if (!regex.hasMatch(value)) {
+                                        return 'Please make sure your email address is valid';
+                                      } else {
+                                        return 'null';
+                                      }
                                     }
-                                  }
-                                },
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -167,7 +168,7 @@ class _LoginState extends State<Login> {
                           padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
                           child: Material(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.white.withOpacity(0.5),
+                            color: Colors.grey.withOpacity(0.2),
                             elevation: 0,
                             child: Padding(
                               padding: const EdgeInsets.only(
@@ -228,70 +229,88 @@ class _LoginState extends State<Login> {
                               )
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          child: Text(
-                            'Forgot password',
-                            style: TextStyle(
-                                color: Colors.white,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                              child: Text(
+                                'Forgot password',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Signup(),
+                                      )
+                                  );
+                                },
+                                child: Text(
+                                  'Create an account',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Expanded(child: Container()),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Signup()
-                                )
-                              );
-                            },
                             child: Text(
-                              ' Sign up!',
+                              'Or',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.red
+                                  color: Colors.grey,
+                                  fontSize: 20
                               )
-                            ),
                           ),
                         ),
                         Divider(
                           color: Colors.white,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          child: Text(
-                            'Other login in option',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          child: Material(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.red.shade900,
-                              child: MaterialButton(
-                                onPressed: (){
-                                  handleSignIn();
-                                },
-                                minWidth: MediaQuery.of(context).size.width,
-                                child: Text(
-                                  'Google',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18
-                                  ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+                              child: Material(
+                                child: MaterialButton(
+                                    onPressed: () {
+
+                                    },
+                                    child: Image.asset(
+                                        "images/fb.png",
+                                        width: 60
+                                    )
                                 ),
-                              )
-                          ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+                              child: Material(
+                                child: MaterialButton(
+                                    onPressed: () {
+                                      handleSignIn();
+                                    },
+                                    child: Image.asset(
+                                        "images/ggg.png",
+                                        width: 60
+                                    )
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     )
