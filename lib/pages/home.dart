@@ -1,7 +1,9 @@
 import 'package:ecommerceapp/commons/common.dart';
 import 'package:ecommerceapp/pages/login.dart';
+import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../components/horizontal_listview.dart';
 import '../components/products.dart';
 import 'cart.dart';
@@ -17,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _searchTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
     Widget image_carousel = Container(
         height: 200,
         child: Carousel(
@@ -167,14 +170,7 @@ class _HomePageState extends State<HomePage> {
             ),
             InkWell(
               onTap: () {
-                auth.FirebaseAuth session = auth.FirebaseAuth.instance;
-                session.signOut().then((value) => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) => Login())
-                  )
-                });
+                user.singOut();
               },
               child: ListTile(
                 title: Text('Logout'),

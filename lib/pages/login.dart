@@ -1,7 +1,9 @@
 import 'package:ecommerceapp/commons/common.dart';
 import 'package:ecommerceapp/pages/signup.dart';
+import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -18,6 +20,7 @@ class _LoginState extends State<Login> {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
   final auth.FirebaseAuth firebaseAuth = auth.FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
+  final _key = GlobalKey<ScaffoldState>();
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   SharedPreferences preferences;
@@ -99,7 +102,7 @@ class _LoginState extends State<Login> {
           )
       );
     } else {
-      Fluttertoast.showToast(msg: "You are not lg");
+      Fluttertoast.showToast(msg: "You are not logged");
     }
     setState(() {
       loading: false;
@@ -107,7 +110,9 @@ class _LoginState extends State<Login> {
   }
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
     return Scaffold(
+      key: _key,
       body: Stack(
         children: [
           Padding(
@@ -170,8 +175,6 @@ class _LoginState extends State<Login> {
                                       RegExp regex = RegExp(pattern);
                                       if (!regex.hasMatch(value)) {
                                         return 'Please make sure your email address is valid';
-                                      } else {
-                                        return 'null';
                                       }
                                     }
                                   },
@@ -229,8 +232,19 @@ class _LoginState extends State<Login> {
                               borderRadius: BorderRadius.circular(20),
                               color: deepOrange,
                               child: MaterialButton(
-                                onPressed: (){
-                                  Fluttertoast.showToast(msg: 'ok');
+                                onPressed: () async {
+                                  if(_formKey.currentState.validate()){
+                                    if(!await user.signIn(
+                                      _emailTextController.text,
+                                      _passwordTextController.text,
+                                    )) {
+                                      _key.currentState.showSnackBar(
+                                          SnackBar(
+                                              content: Text('SignIn failed')
+                                          )
+                                      );
+                                    }
+                                  }
                                 },
                                 minWidth: MediaQuery.of(context).size.width,
                                 child: Text(
