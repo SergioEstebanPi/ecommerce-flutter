@@ -98,28 +98,28 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               decoration: BoxDecoration(
-                  color: Colors.red
+                  color: deepOrange
               ),
             ),
             InkWell(
               onTap: () {},
               child: ListTile(
                 title: Text('Home Page'),
-                leading: Icon(Icons.home,color: Colors.red,),
+                leading: Icon(Icons.home,color: deepOrange,),
               ),
             ),
             InkWell(
               onTap: () {},
               child: ListTile(
                 title: Text('My Account'),
-                leading: Icon(Icons.person, color: Colors.red,),
+                leading: Icon(Icons.person, color: deepOrange,),
               ),
             ),
             InkWell(
               onTap: () {},
               child: ListTile(
                 title: Text('My Orders'),
-                leading: Icon(Icons.shopping_basket,color: Colors.red,),
+                leading: Icon(Icons.shopping_basket,color: deepOrange,),
               ),
             ),
             InkWell(
@@ -133,21 +133,21 @@ class _HomePageState extends State<HomePage> {
               },
               child: ListTile(
                 title: Text('Shopping cart'),
-                leading: Icon(Icons.shopping_cart,color: Colors.red),
+                leading: Icon(Icons.shopping_cart,color: deepOrange),
               ),
             ),
             InkWell(
               onTap: () {},
               child: ListTile(
                 title: Text('Dashboard'),
-                leading: Icon(Icons.dashboard,color: Colors.red,),
+                leading: Icon(Icons.dashboard,color: deepOrange),
               ),
             ),
             InkWell(
               onTap: () {},
               child: ListTile(
                 title: Text('Favourites'),
-                leading: Icon(Icons.favorite, color: Colors.red),
+                leading: Icon(Icons.favorite, color: deepOrange),
               ),
             ),
             Divider(),
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
               },
               child: ListTile(
                 title: Text('Logout'),
-                leading: Icon(Icons.login_outlined, color: Colors.red),
+                leading: Icon(Icons.login_outlined, color: deepOrange),
               ),
             ),
           ],
