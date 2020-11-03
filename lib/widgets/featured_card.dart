@@ -1,7 +1,9 @@
 import 'package:ecommerceapp/commons/common.dart';
+import 'package:ecommerceapp/commons/loading.dart';
 import 'package:ecommerceapp/widgets/product_details.dart';
 import 'package:ecommerceapp/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class FeaturedCard extends StatelessWidget {
   final ProductModel product;
@@ -31,11 +33,19 @@ class FeaturedCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Stack(
               children: <Widget>[
-                Image.asset(
-                  "images/jeans2.jfif",
-                  height: 220,
-                  width: 200,
-                  fit: BoxFit.cover,
+                Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Loading(),
+                    )),
+                Center(
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: product.picture,
+                    fit: BoxFit.cover,
+                    height: 220,
+                    width: 200,
+                  ),
                 ),
 
                 Align(

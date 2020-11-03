@@ -16,7 +16,6 @@ class ProductServices {
       for(DocumentSnapshot product in snap.docs){
         featuredProducts.add(ProductModel.fromSnapshot(product));
       }
-      print('terminnaa');
       print(featuredProducts);
       return featuredProducts;
     });

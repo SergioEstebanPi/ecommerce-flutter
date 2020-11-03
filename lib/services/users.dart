@@ -12,9 +12,7 @@ class UserServices {
     _firestore
       .collection(ref)
       .doc(data["uid"])
-      .set(data)
-    .then((value) => print('Agregado'))
-    .catchError((error) => print('Failed to add user: $error'));
+      .set(data);
   }
 
   Future<UserModel> getUserById(String id) =>

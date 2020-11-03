@@ -17,8 +17,8 @@ class UserProvider with ChangeNotifier {
   Status _status = Status.Uninitialized;
   Status get status => _status;
   auth.User get user => _user;
-  UserServices _userServices;
-  UserModel userModel;
+  UserServices _userServices = UserServices();
+  UserModel _userModel;
 
   UserProvider.initialize(): _auth = auth.FirebaseAuth.instance {
     _auth.authStateChanges().listen(_onStateChanged);
@@ -42,6 +42,7 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<bool> signUp(String name, String email, String password) async{
+    print('singUp');
     try {
       _status = Status.Authenticating;
       notifyListeners();
@@ -55,9 +56,13 @@ class UserProvider with ChangeNotifier {
          "uid": data.user.uid,
          "stripeId": '',
         };
+        print(values);
         _userServices.createUser(values);
         _status = Status.Authenticated;
         notifyListeners();
+      })
+      .catchError((error) {
+        print(error.toString());
       });
       return true;
     } catch(e){
@@ -80,6 +85,7 @@ class UserProvider with ChangeNotifier {
       _status = Status.Unauthenticated;
     } else {
       _user = user;
+      _userModel = await _userServices.getUserById(user.uid);
       _status = Status.Authenticated;
     }
     notifyListeners();
