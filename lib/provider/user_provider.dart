@@ -1,4 +1,5 @@
-import 'package:ecommerceapp/db/users.dart';
+import 'package:ecommerceapp/services/users.dart';
+import 'package:ecommerceapp/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -17,6 +18,7 @@ class UserProvider with ChangeNotifier {
   Status get status => _status;
   auth.User get user => _user;
   UserServices _userServices;
+  UserModel userModel;
 
   UserProvider.initialize(): _auth = auth.FirebaseAuth.instance {
     _auth.authStateChanges().listen(_onStateChanged);
@@ -50,7 +52,8 @@ class UserProvider with ChangeNotifier {
         Map<String, dynamic> values = {
          "name": name,
          "email": email,
-         "userId": data.user.uid,
+         "uid": data.user.uid,
+         "stripeId": '',
         };
         _userServices.createUser(values);
         _status = Status.Authenticated;

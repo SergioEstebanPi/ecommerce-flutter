@@ -1,5 +1,5 @@
 import 'package:ecommerceapp/commons/common.dart';
-import 'package:ecommerceapp/pages/signup.dart';
+import 'package:ecommerceapp/screens/signup.dart';
 import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

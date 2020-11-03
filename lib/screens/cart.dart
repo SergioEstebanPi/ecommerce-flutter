@@ -1,4 +1,4 @@
-import 'package:ecommerceapp/components/cart_products.dart';
+import 'package:ecommerceapp/widgets/cart_products.dart';
 import 'package:flutter/material.dart';
 
 class Cart extends StatefulWidget {

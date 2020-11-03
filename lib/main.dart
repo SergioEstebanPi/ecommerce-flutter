@@ -1,17 +1,24 @@
-import 'package:ecommerceapp/pages/home.dart';
-import 'package:ecommerceapp/pages/splash.dart';
+import 'package:ecommerceapp/services/products.dart';
+import 'package:ecommerceapp/screens/home.dart';
+import 'package:ecommerceapp/screens/splash.dart';
+import 'package:ecommerceapp/provider/app_provider.dart';
+import 'package:ecommerceapp/provider/product_provider.dart';
 import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceapp/pages/login.dart';
+import 'package:ecommerceapp/screens/login.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-      ChangeNotifierProvider(
-        create: (_) => UserProvider.initialize(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: UserProvider.initialize()),
+          ChangeNotifierProvider.value(value: ProductProvider.initialize()),
+          ChangeNotifierProvider.value(value: AppProvider()),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(

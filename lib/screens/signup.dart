@@ -1,8 +1,8 @@
 import 'package:ecommerceapp/commons/common.dart';
 import 'package:ecommerceapp/commons/loading.dart';
-import 'package:ecommerceapp/db/auth.dart';
-import 'package:ecommerceapp/db/users.dart';
-import 'package:ecommerceapp/pages/home.dart';
+import 'package:ecommerceapp/services/auth.dart';
+import 'package:ecommerceapp/services/users.dart';
+import 'package:ecommerceapp/screens/home.dart';
 import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

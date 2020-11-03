@@ -1,6 +1,10 @@
+import 'package:ecommerceapp/models/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
+  final ProductModel product;
+
+  const ProductDetails({Key key, this.product}) : super(key: key);
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }

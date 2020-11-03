@@ -1,7 +1,7 @@
 import 'package:ecommerceapp/commons/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ecommerceapp/pages/product_detail.dart';
+import 'package:ecommerceapp/screens/product_detail.dart';
 
 class Products extends StatefulWidget {
   @override
