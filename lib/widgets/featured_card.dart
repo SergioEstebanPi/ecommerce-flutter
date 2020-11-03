@@ -1,5 +1,5 @@
 import 'package:ecommerceapp/commons/common.dart';
-import 'package:ecommerceapp/commons/loading.dart';
+import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/widgets/loading.dart';
 import 'package:ecommerceapp/widgets/product_details.dart';
 import 'package:ecommerceapp/models/product.dart';
 import 'package:flutter/material.dart';

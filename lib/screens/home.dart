@@ -1,4 +1,5 @@
 import 'package:ecommerceapp/commons/common.dart';
+import 'package:ecommerceapp/provider/product_provider.dart';
 import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/widgets/custom_app_bar.dart';
 import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/widgets/featured_products.dart';
 import 'package:ecommerceapp/screens/login.dart';
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context);
     final user = Provider.of<UserProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
     Widget image_carousel = Container(
         height: 200,
         child: Carousel(
@@ -74,26 +76,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            ProductCard(
-              brand: 'SantosBrand',
-              name: 'Lux Blazer',
-              price: 24.00,
-              onSale: true,
-              picture: '',
-            ),
-            ProductCard(
-              brand: 'SantosBrand',
-              name: 'Lux Blazer',
-              price: 24.00,
-              onSale: true,
-              picture: '',
-            ),
-            ProductCard(
-              brand: 'SantosBrand',
-              name: 'Lux Blazer',
-              price: 24.00,
-              onSale: true,
-              picture: '',
+            Column(
+              children: productProvider.products.map((product) =>
+                  GestureDetector(
+                    onTap: () {
+                    },
+                    child:  ProductCard(product: product,),
+                  )
+              ).toList(),
             ),
           ],
         ),
