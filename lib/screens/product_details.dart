@@ -307,7 +307,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                               elevation: 0.0,
                               child: MaterialButton(
                                 onPressed: () async {
-                                  /*
                                   appProvider.changeIsLoading();
                                   bool success = await userProvider.addToCart(
                                       product: widget.product,
@@ -325,7 +324,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     appProvider.changeIsLoading();
                                     return;
                                   }
-                                   */
                                 },
                                 minWidth: MediaQuery
                                     .of(context)
