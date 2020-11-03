@@ -37,20 +37,24 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: Stack(
                       children: [
-                        Positioned.fill(
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Loading(),
-                            )
-                        ),
-                        Center(
-                          child: FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            image: product.picture,
-                            height: 140,
-                            width: 120,
-                            fit: BoxFit.cover,
-                          ),
+                        Stack(
+                          children: [
+                            Positioned.fill(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Loading(),
+                                )
+                            ),
+                            Center(
+                              child: FadeInImage.memoryNetwork(
+                                placeholder: kTransparentImage,
+                                image: product.picture.toString(),
+                                height: 140,
+                                width: 120,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ]
                         ),
                       ]
                   ),

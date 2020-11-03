@@ -41,7 +41,7 @@ class FeaturedCard extends StatelessWidget {
                 Center(
                   child: FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
-                    image: product.picture,
+                    image: product.picture.toString(),
                     fit: BoxFit.cover,
                     height: 220,
                     width: 200,

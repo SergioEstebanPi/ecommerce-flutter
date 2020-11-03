@@ -45,20 +45,26 @@ class _ProductDetailsState extends State<ProductDetails> {
               children: <Widget>[
                 Stack(
                   children: <Widget>[
-                    Positioned.fill(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Loading(),
-                        )),
-                    Center(
-                      child: FadeInImage.memoryNetwork(
-                        placeholder: kTransparentImage,
-                        image: widget.product.picture,
-                        fit: BoxFit.fill,
-                        height: 400,
-                        width: double.infinity,
-                      ),
-                    ),
+                      widget.product.picture != null ?
+                      Stack(
+                        children: <Widget>[
+                        Positioned.fill(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Loading(),
+                            )),
+                        Center(
+                          child: FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: widget.product.picture,
+                            fit: BoxFit.fill,
+                            height: 400,
+                            width: double.infinity,
+                          ),
+                        ),
+                      ]
+                    )
+                    : CustomText(text: 'No image'),
                     Align(
                       alignment: Alignment.topCenter,
                       child: Container(

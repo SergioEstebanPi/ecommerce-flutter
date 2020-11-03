@@ -20,6 +20,7 @@ class UserModel {
 
   // named constructure
   UserModel.fromSnapshot(DocumentSnapshot snapshot){
+    print(snapshot);
     Map data = snapshot.data();
     _id = data[ID];
     _name = data[NAME];

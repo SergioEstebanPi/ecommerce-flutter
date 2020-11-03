@@ -20,6 +20,7 @@ class UserServices {
       .doc(id)
       .get()
       .then((doc) {
+        print(doc);
         return UserModel.fromSnapshot(doc);
       });
 }

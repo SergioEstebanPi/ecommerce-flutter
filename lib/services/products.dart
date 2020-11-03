@@ -9,7 +9,7 @@ class ProductServices {
   Future<List<ProductModel>> getFeaturedProducts() async =>
     _firestore
         .collection(ref)
-        .where('featured', isEqualTo: true)
+        //.where('featured', isEqualTo: true)
         .get()
         .then((snap){
       List<ProductModel> featuredProducts = [];
