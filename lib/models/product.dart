@@ -31,7 +31,7 @@ class ProductModel {
   // getters
   String get id => _id;
   String get name => _name;
-  String get description => description;
+  String get description => _description;
   String get category => _category;
   String get brand => _brand;
   int get price => _price;

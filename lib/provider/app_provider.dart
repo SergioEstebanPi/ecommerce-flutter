@@ -3,23 +3,10 @@ import 'package:ecommerceapp/models/product.dart';
 import 'package:flutter/material.dart';
 
 class AppProvider with ChangeNotifier {
-  List<ProductModel> _featuredProducts = [];
-  ProductServices _productServices = ProductServices();
+  bool isLoading = false;
 
-  AppProvider(){
-    getFeaturedProducts();
+  void changeIsLoading(){
+    isLoading = !isLoading;
+    notifyListeners();
   }
-
-  AppProvider.initialize() {
-
-  }
-
-  // getter
-  List<ProductModel> get featuredProducts => _featuredProducts;
-
-  // methods
-  void getFeaturedProducts() async {
-    _featuredProducts = await _productServices.getFeaturedProducts();
-  }
-
 }

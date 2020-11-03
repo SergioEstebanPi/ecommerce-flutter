@@ -1,8 +1,10 @@
 import 'package:ecommerceapp/commons/common.dart';
 import 'package:ecommerceapp/models/product.dart';
+import 'package:ecommerceapp/screens/product_details.dart';
 import 'package:ecommerceapp/widgets/custom_text.dart';
-import 'package:ecommerceapp/widgets/product_details.dart';
+import 'package:ecommerceapp/widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -14,22 +16,46 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           changeScreen(context, ProductDetails(product: product,));
         },
         child: Container(
           decoration: BoxDecoration(
-            color: white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey[300],
-                  offset: Offset(-2, -1),
-                  blurRadius: 5),
-            ]),
+              color: white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey[300],
+                    offset: Offset(-2, -1),
+                    blurRadius: 5),
+              ]),
           child: Row(
             children: <Widget>[
-              _productImage(product.picture),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Stack(
+                      children: [
+                        Positioned.fill(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Loading(),
+                            )
+                        ),
+                        Center(
+                          child: FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: product.picture,
+                            height: 140,
+                            width: 120,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ]
+                  ),
+                ),
+              ),
               SizedBox(width: 10,),
               RichText(text: TextSpan(
                   children: [
@@ -55,7 +81,7 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: product.onSale ? 'ON SALE ' : "",
+                      text: product.onSale ? 'ON SALE' : "",
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
@@ -66,38 +92,12 @@ class ProductCard extends StatelessWidget {
                   style: TextStyle(
                       color: Colors.black
                   )
-                ),
+              ),
               )
             ],
           ),
         ),
       ),
     );
-  }
-
-  Widget _productImage(String picture) {
-    if(picture == null){
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CustomText(text: 'No image'),
-      );
-    } else {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Stack(
-            children: [
-                Image.network(
-                  product.picture,
-                  height: 140,
-                  width: 120,
-                  fit: BoxFit.cover,
-                ),
-            ]
-          ),
-        ),
-      );
-    }
   }
 }

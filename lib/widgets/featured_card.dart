@@ -1,6 +1,6 @@
 import 'package:ecommerceapp/commons/common.dart';
+import 'package:ecommerceapp/screens/product_details.dart';
 import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/widgets/loading.dart';
-import 'package:ecommerceapp/widgets/product_details.dart';
 import 'package:ecommerceapp/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -54,6 +54,7 @@ class FeaturedCard extends StatelessWidget {
                       height: 100,
                       width: 200,
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
                         // Box decoration takes a gradient
                         gradient: LinearGradient(
                           // Where the linear gradient begins and ends
