@@ -25,12 +25,13 @@ class UserServices {
         return UserModel.fromSnapshot(doc);
       });
 
-  void addToCart({String userId, CartItemModel cartItem}) {
+  void addToCart({String userId, CartItemModel cartItem}){
+    print("agregar");
+    print(cartItem);
     _firestore.collection(ref).doc(userId).update({
       "cart": FieldValue.arrayUnion([cartItem.toMap()])
     });
   }
-
   void removeFromCart({String userId, CartItemModel cartItem}) {
     _firestore.collection(ref).doc(userId).update({
       "cart": FieldValue.arrayRemove([cartItem.toMap()])

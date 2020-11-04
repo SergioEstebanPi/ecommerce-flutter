@@ -89,6 +89,10 @@ class UserProvider with ChangeNotifier {
     } else {
       _user = user;
       _userModel = await _userServices.getUserById(user.uid);
+      print("CART ITEMS: ${_userModel.cart}");
+      print("CART ITEMS: ${_userModel.cart.length}");
+      print("CART ITEMS: ${_userModel.totalCartPrice}");
+      print("CART ITEMS: ${_userModel.cart.length}");
       _status = Status.Authenticated;
     }
     notifyListeners();
@@ -109,15 +113,15 @@ class UserProvider with ChangeNotifier {
         "price": product.price,
         "quantity": quantity,
         "size": size,
-        "color": color
+        "color": color,
       };
 
       CartItemModel item = CartItemModel.fromMap(cartItem);
 //      if(!itemExists){
-      print("CART ITEMS ARE: ${cart.toString()}");
       _userServices.addToCart(userId: _user.uid, cartItem: item);
 //      }
 
+      print("CART ITEMS ARE: ${cart.toString()}");
       return true;
     } catch (e) {
       print("THE ERROR ${e.toString()}");

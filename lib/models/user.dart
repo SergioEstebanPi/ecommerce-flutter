@@ -41,7 +41,10 @@ class UserModel {
     if(cart == null){
       return 0;
     }
+    print('cantidades');
     for(Map cartItem in cart){
+      print(cartItem['price']);
+      print(cartItem['quantity']);
       total += cartItem['price'] * cartItem['quantity'];
     }
     print("THE TOTAL IS $total");

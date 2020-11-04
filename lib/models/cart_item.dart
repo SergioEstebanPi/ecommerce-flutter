@@ -4,6 +4,7 @@ class CartItemModel {
   static const IMAGE = "image";
   static const PRODUCT_ID = "productId";
   static const PRICE = "price";
+  static const QUANTITY = "quantity";
   static const SIZE = "size";
   static const COLOR = "color";
 
@@ -14,6 +15,7 @@ class CartItemModel {
   String _size;
   String _color;
   int _price;
+  int _quantity;
 
   //  getters
   String get id => _id;
@@ -23,6 +25,7 @@ class CartItemModel {
   String get size => _size;
   String get color => _color;
   int get price => _price;
+  int get quantity => _quantity;
 
   CartItemModel.fromMap(Map data){
     _id = data[ID];
@@ -30,6 +33,7 @@ class CartItemModel {
     _image =  data[IMAGE];
     _productId = data[PRODUCT_ID];
     _price = data[PRICE];
+    _quantity = data[QUANTITY];
     _size = data[SIZE];
     _color = data[COLOR];
   }
@@ -40,6 +44,7 @@ class CartItemModel {
     NAME: _name,
     PRODUCT_ID: _productId,
     PRICE: _price,
+    QUANTITY: _quantity,
     SIZE: _size,
     COLOR: _color
   };

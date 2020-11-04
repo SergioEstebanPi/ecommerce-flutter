@@ -311,7 +311,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   bool success = await userProvider.addToCart(
                                       product: widget.product,
                                       color: _color,
-                                      size: _size);
+                                      size: _size,
+                                      quantity: 1
+                                  );
                                   if (success) {
                                     _key.currentState.showSnackBar(
                                         SnackBar(content: Text("Added to Cart!")));
