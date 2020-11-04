@@ -8,6 +8,7 @@ import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/
 import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/widgets/search.dart';
 import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:ecommerceapp/screens/order.dart';
+import 'package:ecommerceapp/screens/product_search.dart';
 import 'package:ecommerceapp/services/products.dart';
 import 'package:ecommerceapp/widgets/custom_text.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
 
             ListTile(
               onTap: () {
-//                userProvider.signOut();
+                userProvider.signOut();
               },
               leading: Icon(Icons.exit_to_app),
               title: CustomText(text: "Log out"),
@@ -123,7 +124,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
 //          Search Text field
-//            Search(),
+            //Search(),
 
             Container(
               decoration: BoxDecoration(
@@ -148,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                       textInputAction: TextInputAction.search,
                       onSubmitted: (pattern)async{
                         await productProvider.search(productName: pattern);
-                        //changeScreen(context, ProductSearchScreen());
+                        changeScreen(context, ProductSearchScreen());
                       },
                       decoration: InputDecoration(
                         hintText: "blazer, dress...",

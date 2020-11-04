@@ -293,7 +293,9 @@ class _SignupState extends State<Signup> {
                                                   content: Text('SignUp failed')
                                               )
                                           );
+                                          return;
                                         }
+                                        changeScreenReplacement(context, HomePage());
                                       }
                                     },
                                     minWidth: MediaQuery.of(context).size.width,
