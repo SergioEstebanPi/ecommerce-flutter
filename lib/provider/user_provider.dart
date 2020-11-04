@@ -1,5 +1,7 @@
 import 'package:ecommerceapp/models/cart_item.dart';
+import 'package:ecommerceapp/models/order.dart';
 import 'package:ecommerceapp/models/product.dart';
+import 'package:ecommerceapp/services/orders.dart';
 import 'package:ecommerceapp/services/users.dart';
 import 'package:ecommerceapp/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -18,10 +20,17 @@ class UserProvider with ChangeNotifier {
   auth.FirebaseAuth _auth;
   auth.User _user;
   Status _status = Status.Uninitialized;
+  UserServices _userServices = UserServices();
+  OrderServices _orderServices = OrderServices();
+
+  UserModel _userModel;
+
+  //  getter
+  UserModel get userModel => _userModel;
   Status get status => _status;
   auth.User get user => _user;
-  UserServices _userServices = UserServices();
-  UserModel _userModel;
+  // public variables
+  List<OrderModel> orders = [];
 
   UserProvider.initialize(): _auth = auth.FirebaseAuth.instance {
     _auth.authStateChanges().listen(_onStateChanged);
@@ -129,7 +138,6 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-    /*
   Future<bool> removeFromCart({CartItemModel cartItem})async{
     print("THE PRODUC IS: ${cartItem.toString()}");
 
@@ -142,14 +150,11 @@ class UserProvider with ChangeNotifier {
     }
 
   }
-     */
 
-  /*
   getOrders()async{
     orders = await _orderServices.getUserOrders(userId: _user.uid);
     notifyListeners();
   }
-   */
 
   Future<void> reloadUserModel()async{
     _userModel = await _userServices.getUserById(user.uid);

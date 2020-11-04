@@ -2,6 +2,7 @@ import 'package:ecommerceapp/commons/common.dart';
 import 'package:ecommerceapp/models/product.dart';
 import 'package:ecommerceapp/provider/app_provider.dart';
 import 'package:ecommerceapp/provider/user_provider.dart';
+import 'package:ecommerceapp/screens/cart.dart';
 import 'package:ecommerceapp/widgets/custom_text.dart';
 import 'package:ecommerceapp/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +158,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         alignment: Alignment.centerLeft,
                         child: InkWell(
                           onTap: () {
-                            //changeScreen(context, CartScreen());
+                            changeScreen(context, CartScreen());
                           },
                           child: Padding(
                               padding: const EdgeInsets.all(4),

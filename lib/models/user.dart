@@ -13,6 +13,7 @@ class UserModel {
   String _name;
   String _email;
   String _stripeId;
+  int _priceSum = 0;
 
   // getters
   String get id => _id;
@@ -37,7 +38,6 @@ class UserModel {
   }
 
   int getTotalPrice({List cart}) {
-    int total = 0;
     if(cart == null){
       return 0;
     }
@@ -45,8 +45,9 @@ class UserModel {
     for(Map cartItem in cart){
       print(cartItem['price']);
       print(cartItem['quantity']);
-      total += cartItem['price'] * cartItem['quantity'];
+      _priceSum += cartItem['price'] * cartItem['quantity'];
     }
+    int total = _priceSum;
     print("THE TOTAL IS $total");
     return total;
   }
