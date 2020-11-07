@@ -26,15 +26,16 @@ class UserModel {
   int totalCartPrice;
 
   // named constructure
-  UserModel.fromSnapshot(DocumentSnapshot snapshot){
-    print(snapshot);
-    Map data = snapshot.data();
-    _id = data[ID];
-    _name = data[NAME];
-    _email = data[EMAIL];
-    _stripeId = data[STRIPE_ID] ?? "";
-    cart = _convertCartItems(data[CART] ?? []);
-    totalCartPrice = data[CART] == null ? 0 : getTotalPrice(cart: data[CART]);
+  UserModel.fromSnapshot(DocumentSnapshot data){
+    print('fromSnapshot');
+    print(data.get(ID));
+    print(data.get(NAME));
+    _id = data.get(ID);
+    _name = data.get(NAME);
+    _email = data.get(EMAIL);
+    _stripeId = data.get(STRIPE_ID) ?? "";
+    cart = _convertCartItems(data.get(CART) ?? []);
+    totalCartPrice = data.get(CART) == null ? 0 : getTotalPrice(cart: data.get(CART));
   }
 
   int getTotalPrice({List cart}) {

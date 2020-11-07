@@ -58,17 +58,17 @@ class _LoginState extends State<Login> {
         FirebaseFirestore.instance.collection("users")
             .doc(firebaseUser.uid)
             .set({
-              "id": firebaseUser.uid,
-              "username": firebaseUser.displayName,
-              "photoURL": firebaseUser.photoURL
+              "uid": firebaseUser.uid,
+              "name": firebaseUser.displayName,
+              "imageUrl": firebaseUser.photoURL
             });
-        await preferences.setString("id", firebaseUser.uid);
-        await preferences.setString("username", firebaseUser.displayName);
-        await preferences.setString("photoURL", firebaseUser.photoURL);
+        await preferences.setString("uid", firebaseUser.uid);
+        await preferences.setString("name", firebaseUser.displayName);
+        await preferences.setString("imageUrl", firebaseUser.photoURL);
       } else {
-        await preferences.setString("id", documents[0]['id']);
-        await preferences.setString("username", documents[0]['username']);
-        await preferences.setString("photoURL", documents[0]['photoURL']);
+        await preferences.setString("uid", documents[0]['uid']);
+        await preferences.setString("name", documents[0]['name']);
+        await preferences.setString("imageUrl", documents[0]['imageUrl']);
       }
       Fluttertoast.showToast(msg: "Login was successful");
       setState(() {

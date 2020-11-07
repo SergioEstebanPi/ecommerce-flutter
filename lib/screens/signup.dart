@@ -377,8 +377,8 @@ class _SignupState extends State<Signup> {
                                               "name": user.displayName,
                                               "email": user.email,
                                               "phoneNumber": user.phoneNumber,
-                                              "photoURL": user.photoURL,
-                                              "userId": user.uid,
+                                              "imageURL": user.photoURL,
+                                              "uid": user.uid,
                                             });
 
                                             print('redirigido al home');
@@ -456,8 +456,8 @@ class _SignupState extends State<Signup> {
           _userServices.createUser(
             value =
               {
-                "userId": data.user.uid,
-                "username": _nameTextController.text,
+                "uid": data.user.uid,
+                "name": _nameTextController.text,
                 "email": _emailTextController.text,
                 "gender": gender,
               }
