@@ -13,7 +13,13 @@ class ProductServices {
         .get()
         .then((snap){
       List<ProductModel> featuredProducts = [];
+      print("product en esta seccion");
       for(DocumentSnapshot product in snap.docs){
+        print(product.get('id'));
+        print(product.get('price'));
+        print(product.get('quantity'));
+        print(product.get('name'));
+        //print(product.get('description'));
         featuredProducts.add(ProductModel.fromSnapshot(product));
       }
       print(featuredProducts);

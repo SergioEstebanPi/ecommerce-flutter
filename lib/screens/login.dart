@@ -49,7 +49,7 @@ class _LoginState extends State<Login> {
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection("users")
           .where(
-            "id",
+            "uid",
             isEqualTo: firebaseUser.uid
         ).get();
       final List<DocumentSnapshot> documents = result.docs;
@@ -60,6 +60,9 @@ class _LoginState extends State<Login> {
             .set({
               "uid": firebaseUser.uid,
               "name": firebaseUser.displayName,
+              "email": firebaseUser.email,
+              "phoneNumber": firebaseUser.phoneNumber,
+              "emailVerified": firebaseUser.emailVerified,
               "imageUrl": firebaseUser.photoURL
             });
         await preferences.setString("uid", firebaseUser.uid);
@@ -296,7 +299,7 @@ class _LoginState extends State<Login> {
                             ),
                           ],
                         ),
-                        Expanded(child: Container()),
+                        //Expanded(child: Container()),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                             child: Text(

@@ -38,68 +38,71 @@ class ProductCard extends StatelessWidget {
                   child: Stack(
                       children: [
                         Stack(
-                          children: [
-                            Positioned.fill(
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Loading(),
-                                )
-                            ),
-                            Center(
-                              child: FadeInImage.memoryNetwork(
-                                placeholder: kTransparentImage,
-                                image: product.picture.toString(),
-                                height: 140,
-                                width: 120,
-                                fit: BoxFit.cover,
+                            children: [
+                              Positioned.fill(
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Loading(),
+                                  )
                               ),
-                            ),
-                          ]
+                              Center(
+                                child: FadeInImage.memoryNetwork(
+                                  placeholder: kTransparentImage,
+                                  image: product.picture.toString(),
+                                  height: 140,
+                                  width: 120,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ]
                         ),
                       ]
                   ),
                 ),
               ),
               SizedBox(width: 10,),
-              RichText(text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '${product.name} \n',
-                      style: TextStyle(
-                          fontSize: 20
-                      ),
+              Flexible(
+                  child: RichText(
+                    text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '${product.name} \n',
+                            style: TextStyle(
+                                fontSize: 18
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'by: ${product.brand} \n\n',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey
+                            ),
+                          ),
+                          TextSpan(
+                            text: '\$${product.price / 100} \t',
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight:
+                                FontWeight.bold
+                            ),
+                          ),
+                          TextSpan(
+                            text: product.onSale ? 'ON SALE' : "",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.red
+                            ),
+                          ),
+                        ],
+                        style: TextStyle(
+                            color: Colors.black
+                        )
                     ),
-                    TextSpan(
-                      text: 'by: ${product.brand} \n\n\n\n',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey
-                      ),
-                    ),
-                    TextSpan(
-                      text: '\$${product.price / 100} \t',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight:
-                          FontWeight.bold
-                      ),
-                    ),
-                    TextSpan(
-                      text: product.onSale ? 'ON SALE' : "",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.red
-                      ),
-                    ),
-                  ],
-                  style: TextStyle(
-                      color: Colors.black
                   )
               ),
-              )
             ],
-          ),
+          )
         ),
       ),
     );

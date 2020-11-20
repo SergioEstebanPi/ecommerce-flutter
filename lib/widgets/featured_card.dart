@@ -1,7 +1,7 @@
 import 'package:ecommerceapp/commons/common.dart';
 import 'package:ecommerceapp/screens/product_details.dart';
-import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/widgets/loading.dart';
 import 'package:ecommerceapp/models/product.dart';
+import 'package:ecommerceapp/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -76,23 +76,28 @@ class FeaturedCard extends StatelessWidget {
                       ),
 
                       child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Container()
-                      )),
-                ),
-
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left:8.0),
-                      child: RichText(text: TextSpan(children: [
-                        TextSpan(text: '${product.name} \n', style: TextStyle(fontSize: 18)),
-                        TextSpan(text: '\$${product.price / 100} \n', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-
-                      ]))
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: RichText(
+                              text: TextSpan(
+                                  children: [
+                                    TextSpan(text: '${product.name} \n',
+                                        style: TextStyle(fontSize: 18)
+                                    ),
+                                    TextSpan(text: '\$${product.price / 100} \n',
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold
+                                        )
+                                    ),
+                                  ]
+                              )
+                          ),
+                        ),
+                      )
                   ),
-                )
-
+                ),
               ],
             ),
           ),

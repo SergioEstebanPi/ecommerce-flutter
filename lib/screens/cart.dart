@@ -76,24 +76,32 @@ class _CartScreenState extends State<CartScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          RichText(
-                            text: TextSpan(children: [
-                              TextSpan(
-                                  text: userProvider
-                                      .userModel.cart[index].name +
-                                      "\n",
-                                  style: TextStyle(
-                                      color: black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text:
-                                  "\$${userProvider.userModel.cart[index].price / 100} \n\n",
-                                  style: TextStyle(
-                                      color: black,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300)),
-                            ]),
+                          Flexible(
+                              child: RichText(
+                                text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                          text: userProvider
+                                              .userModel.cart[index].name +
+                                              "\n",
+                                          style: TextStyle(
+                                              color: black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold
+                                          )
+                                      ),
+                                      TextSpan(
+                                          text:
+                                          "\$${userProvider.userModel.cart[index].price / 100} \n\n",
+                                          style: TextStyle(
+                                              color: black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w300
+                                          )
+                                      ),
+                                    ]
+                                ),
+                              ),
                           ),
                           IconButton(
                               icon: Icon(

@@ -1,9 +1,9 @@
 import 'package:ecommerceapp/commons/common.dart';
-import 'file:///D:/Usuario/Documentos/SERGIO/flutter/academind/ecommerceapp/lib/widgets/loading.dart';
 import 'package:ecommerceapp/services/auth.dart';
 import 'package:ecommerceapp/services/users.dart';
 import 'package:ecommerceapp/screens/home.dart';
 import 'package:ecommerceapp/provider/user_provider.dart';
+import 'package:ecommerceapp/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
