@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -53,8 +52,6 @@ class _LoginState extends State<Login> {
             isEqualTo: firebaseUser.uid
         ).get();
       final List<DocumentSnapshot> documents = result.docs;
-      Fluttertoast.showToast(msg: "final List<DocumentSnapshot> documents = result.docs;");
-      Fluttertoast.showToast(msg: "" + documents.length.toString());
       if(documents.length == 0) {
         // insert the user to our collection
         FirebaseFirestore.instance.collection("users")
@@ -75,7 +72,7 @@ class _LoginState extends State<Login> {
         await preferences.setString("name", documents[0]['name']);
         await preferences.setString("imageUrl", documents[0]['imageUrl']);
       }
-      Fluttertoast.showToast(msg: "Login was successful");
+      print("DEBUGEAR LOGIN: Login was successful");
       if (mounted) {
         setState(() {
           loading:
@@ -89,11 +86,11 @@ class _LoginState extends State<Login> {
         );
       }
     } else {
-      Fluttertoast.showToast(msg: "Login failed :(");
+      print("DEBUGEAR LOGIN: Login failed :(");
     }
   }
   void isSignedIn() async {
-    Fluttertoast.showToast(msg: "Firebase login");
+    print("DEBUGEAR LOGIN: Firebase login");
     preferences = await SharedPreferences.getInstance();
     isLogedin = await googleSignIn.isSignedIn();
     auth.User firebaseUser = firebaseAuth.currentUser;
@@ -114,7 +111,7 @@ class _LoginState extends State<Login> {
           )
       );
     } else {
-      Fluttertoast.showToast(msg: "You are not logged");
+      print("DEBUGEAR LOGIN: You are not logged");
     }
     setState(() {
       loading: false;

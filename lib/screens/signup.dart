@@ -5,7 +5,6 @@ import 'package:ecommerceapp/screens/home.dart';
 import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:ecommerceapp/widgets/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:provider/provider.dart';
@@ -472,7 +471,7 @@ class _SignupState extends State<Signup> {
             )
         );
       } else {
-        Fluttertoast.showToast(msg: 'User registered yet');
+        print("DEBUGEAR SIGNUP: User registered yet");
       }
     }
   }

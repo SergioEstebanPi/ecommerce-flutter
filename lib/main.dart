@@ -7,7 +7,6 @@ import 'package:ecommerceapp/provider/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerceapp/screens/login.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
