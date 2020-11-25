@@ -7,6 +7,7 @@ import 'package:ecommerceapp/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uuid/uuid.dart';
 
 enum Status {
@@ -19,6 +20,7 @@ enum Status {
 class UserProvider with ChangeNotifier {
   auth.FirebaseAuth _auth;
   auth.User _user;
+  final GoogleSignIn googleSignIn = new GoogleSignIn();
   Status _status = Status.Uninitialized;
   UserServices _userServices = UserServices();
   OrderServices _orderServices = OrderServices();
@@ -44,6 +46,8 @@ class UserProvider with ChangeNotifier {
           email: email,
           password: password
       );
+      _status = Status.Authenticated;
+      notifyListeners();
       return true;
     } catch(e){
       _status = Status.Unauthenticated;
@@ -86,6 +90,7 @@ class UserProvider with ChangeNotifier {
   }
 
   Future signOut() async {
+    googleSignIn.signOut();
     _auth.signOut();
     _status = Status.Unauthenticated;
     notifyListeners();
@@ -95,6 +100,7 @@ class UserProvider with ChangeNotifier {
   Future<void> _onStateChanged(auth.User user) async {
     if(user == null){
       _status = Status.Unauthenticated;
+      notifyListeners();
     } else {
       _user = user;
       _userModel = await _userServices.getUserById(user.uid);
@@ -103,8 +109,8 @@ class UserProvider with ChangeNotifier {
       print("CART ITEMS: ${_userModel.totalCartPrice}");
       print("CART ITEMS: ${_userModel.cart.length}");
       _status = Status.Authenticated;
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   Future<bool> addToCart(

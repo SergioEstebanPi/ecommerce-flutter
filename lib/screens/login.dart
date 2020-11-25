@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
     GoogleSignInAccount googleUser = await googleSignIn.signIn();
     GoogleSignInAuthentication googleSignInAuthentication = await googleUser.authentication;
     final auth.AuthCredential credential = auth.GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication .accessToken,
+      accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
     auth.UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
@@ -53,6 +53,8 @@ class _LoginState extends State<Login> {
             isEqualTo: firebaseUser.uid
         ).get();
       final List<DocumentSnapshot> documents = result.docs;
+      Fluttertoast.showToast(msg: "final List<DocumentSnapshot> documents = result.docs;");
+      Fluttertoast.showToast(msg: "" + documents.length.toString());
       if(documents.length == 0) {
         // insert the user to our collection
         FirebaseFirestore.instance.collection("users")
@@ -74,15 +76,18 @@ class _LoginState extends State<Login> {
         await preferences.setString("imageUrl", documents[0]['imageUrl']);
       }
       Fluttertoast.showToast(msg: "Login was successful");
-      setState(() {
-        loading: false;
-      });
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage(),
-          )
-      );
+      if (mounted) {
+        setState(() {
+          loading:
+          false;
+        });
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(),
+            )
+        );
+      }
     } else {
       Fluttertoast.showToast(msg: "Login failed :(");
     }
@@ -95,6 +100,10 @@ class _LoginState extends State<Login> {
     if(firebaseUser != null){
       setState(() {
         isLogedin = true;
+      });
+    } else {
+      setState(() {
+        isLogedin = false;
       });
     }
     if(isLogedin){
