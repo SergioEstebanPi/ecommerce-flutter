@@ -37,52 +37,59 @@ class _LoginState extends State<Login> {
       loading = true;
     });
     GoogleSignInAccount googleUser = await googleSignIn.signIn();
-    GoogleSignInAuthentication googleSignInAuthentication = await googleUser.authentication;
-    final auth.AuthCredential credential = auth.GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-    auth.UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
-    auth.User firebaseUser = userCredential.user;
-    if(firebaseUser != null){
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection("users")
-          .where(
+    if(googleUser != null){
+      GoogleSignInAuthentication googleSignInAuthentication = await googleUser.authentication;
+      final auth.AuthCredential credential = auth.GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      auth.User firebaseUser;
+      await firebaseAuth.signInWithCredential(credential).then((userCredential) => {
+        firebaseUser = userCredential.user
+      });
+
+      if(firebaseUser != null) {
+        final QuerySnapshot result = await FirebaseFirestore.instance
+            .collection("users")
+            .where(
             "uid",
             isEqualTo: firebaseUser.uid
         ).get();
-      final List<DocumentSnapshot> documents = result.docs;
-      if(documents.length == 0) {
-        // insert the user to our collection
-        await FirebaseFirestore.instance.collection("users")
-            .doc(firebaseUser.uid)
-            .set({
-              "uid": firebaseUser.uid,
-              "name": firebaseUser.displayName,
-              "email": firebaseUser.email,
-              "phoneNumber": firebaseUser.phoneNumber,
-              "emailVerified": firebaseUser.emailVerified,
-              "imageUrl": firebaseUser.photoURL,
-              "cart": [],
-            });
-        await preferences.setString("uid", firebaseUser.uid);
-        await preferences.setString("name", firebaseUser.displayName);
-        await preferences.setString("email", firebaseUser.email);
-        await preferences.setString("phoneNumber", firebaseUser.phoneNumber);
-        await preferences.setBool("emailVerified", firebaseUser.emailVerified);
-        await preferences.setString("imageUrl", firebaseUser.photoURL);
-        await preferences.setStringList("cart", []);
-      } else {
-        await preferences.setString("uid", documents[0]['uid']);
-        await preferences.setString("name", documents[0]['name']);
-        await preferences.setString("email", documents[0]['email']);
-        await preferences.setString("phoneNumber", documents[0]['phoneNumber']);
-        await preferences.setBool("emailVerified", documents[0]['emailVerified']);
-        await preferences.setString("imageUrl", documents[0]['imageUrl']);
-        await preferences.setStringList("cart", []);
-      }
-      print("DEBUGEAR LOGIN: Login was successful");
-      /*
+        final List<DocumentSnapshot> documents = result.docs;
+        if (documents.length == 0) {
+          // insert the user to our collection
+          await FirebaseFirestore.instance.collection("users")
+              .doc(firebaseUser.uid)
+              .set({
+            "uid": firebaseUser.uid,
+            "name": firebaseUser.displayName,
+            "email": firebaseUser.email,
+            "phoneNumber": firebaseUser.phoneNumber,
+            "emailVerified": firebaseUser.emailVerified,
+            "imageUrl": firebaseUser.photoURL,
+            "cart": [],
+          });
+          await preferences.setString("uid", firebaseUser.uid);
+          await preferences.setString("name", firebaseUser.displayName);
+          await preferences.setString("email", firebaseUser.email);
+          await preferences.setString("phoneNumber", firebaseUser.phoneNumber);
+          await preferences.setBool(
+              "emailVerified", firebaseUser.emailVerified);
+          await preferences.setString("imageUrl", firebaseUser.photoURL);
+          await preferences.setStringList("cart", []);
+        } else {
+          await preferences.setString("uid", documents[0]['uid']);
+          await preferences.setString("name", documents[0]['name']);
+          await preferences.setString("email", documents[0]['email']);
+          await preferences.setString(
+              "phoneNumber", documents[0]['phoneNumber']);
+          await preferences.setBool(
+              "emailVerified", documents[0]['emailVerified']);
+          await preferences.setString("imageUrl", documents[0]['imageUrl']);
+          await preferences.setStringList("cart", []);
+        }
+        print("DEBUGEAR LOGIN: Login was successful");
+        /*
       if (mounted) {
         setState(() {
           loading:
@@ -90,7 +97,7 @@ class _LoginState extends State<Login> {
         });
       }
        */
-      /*
+        /*
       if (mounted) {
         setState(() {
           loading:
@@ -104,8 +111,19 @@ class _LoginState extends State<Login> {
         );
       }
        */
+      } else {
+        print("DEBUGEAR LOGIN: Login failed :(");
+        setState(() {
+          isLogedin = false;
+          loading = false;
+        });
+      }
     } else {
       print("DEBUGEAR LOGIN: Login failed :(");
+      setState(() {
+        isLogedin = false;
+        loading = false;
+      });
     }
   }
   void isSignedIn() async {
@@ -133,7 +151,7 @@ class _LoginState extends State<Login> {
       print("DEBUGEAR LOGIN: You are not logged");
     }
     setState(() {
-      loading: false;
+      loading = false;
     });
   }
   @override
@@ -342,6 +360,7 @@ class _LoginState extends State<Login> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            /*
                             Padding(
                               padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
                               child: Material(
@@ -356,6 +375,7 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
+                            */
                             Padding(
                               padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
                               child: Material(

@@ -109,15 +109,13 @@ class UserProvider with ChangeNotifier {
       print(user.uid);
       print(_status);
       _status = Status.Authenticated;
-      notifyListeners();
-
       _user = user;
       _userModel = await _userServices.getUserById(user.uid);
       print("CART ITEMS: ${_userModel.cart}");
       print("CART ITEMS: ${_userModel.cart.length}");
       print("CART ITEMS: ${_userModel.totalCartPrice}");
       print("CART ITEMS: ${_userModel.cart.length}");
-
+      notifyListeners();
     }
   }
 

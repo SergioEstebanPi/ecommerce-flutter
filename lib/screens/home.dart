@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(color: black),
               accountName: CustomText(
-                text: userProvider.userModel?.name ?? "username lading...",
+                text: userProvider.userModel?.name ?? "username loading...",
                 color: white,
                 weight: FontWeight.bold,
                 size: 18,
