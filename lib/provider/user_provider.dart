@@ -67,19 +67,22 @@ class UserProvider with ChangeNotifier {
           password: password
       ).then((data) {
         Map<String, dynamic> values = {
+         "uid": data.user.uid,
          "name": name,
          "email": email,
-         "uid": data.user.uid,
+         "phoneNumber": null,
+         "emailVerified": null,
          "stripeId": '',
+          "cart": [],
         };
         print(values);
         _userServices.createUser(values);
-        _status = Status.Authenticated;
-        notifyListeners();
       })
       .catchError((error) {
         print(error.toString());
       });
+      _status = Status.Authenticated;
+      notifyListeners();
       return true;
     } catch(e){
       _status = Status.Unauthenticated;
@@ -102,14 +105,19 @@ class UserProvider with ChangeNotifier {
       _status = Status.Unauthenticated;
       notifyListeners();
     } else {
+      print(user);
+      print(user.uid);
+      print(_status);
+      _status = Status.Authenticated;
+      notifyListeners();
+
       _user = user;
       _userModel = await _userServices.getUserById(user.uid);
       print("CART ITEMS: ${_userModel.cart}");
       print("CART ITEMS: ${_userModel.cart.length}");
       print("CART ITEMS: ${_userModel.totalCartPrice}");
       print("CART ITEMS: ${_userModel.cart.length}");
-      _status = Status.Authenticated;
-      notifyListeners();
+
     }
   }
 

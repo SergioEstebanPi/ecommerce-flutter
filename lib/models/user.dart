@@ -6,12 +6,15 @@ class UserModel {
   static const ID = 'uid';
   static const NAME = 'name';
   static const EMAIL = 'email';
-  static const STRIPE_ID = 'stripeId';
+  static const PHONE_NUMBER = 'phoneNumber';
+  static const EMAIL_VERIFIED = 'emailVerified';
   static const CART = 'cart';
 
   String _id;
   String _name;
   String _email;
+  String _phoneNumber;
+  bool _emailVerified;
   String _stripeId;
   int _priceSum = 0;
 
@@ -19,7 +22,8 @@ class UserModel {
   String get id => _id;
   String get name => _name;
   String get email => _email;
-  String get stripeId => _stripeId;
+  String get phoneNumber => _phoneNumber;
+  bool get emailVerified => _emailVerified;
 
   // public variable
   List<CartItemModel> cart;
@@ -28,12 +32,14 @@ class UserModel {
   // named constructure
   UserModel.fromSnapshot(DocumentSnapshot data){
     print('fromSnapshot');
+    print(data);
     print(data.get(ID));
     print(data.get(NAME));
     _id = data.get(ID);
     _name = data.get(NAME);
     _email = data.get(EMAIL);
-    _stripeId = data.get(STRIPE_ID) ?? "";
+    _phoneNumber = data.get(PHONE_NUMBER);
+    _emailVerified = data.get(EMAIL_VERIFIED);
     cart = _convertCartItems(data.get(CART) ?? []);
     totalCartPrice = data.get(CART) == null ? 0 : getTotalPrice(cart: data.get(CART));
   }

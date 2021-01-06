@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
       final List<DocumentSnapshot> documents = result.docs;
       if(documents.length == 0) {
         // insert the user to our collection
-        FirebaseFirestore.instance.collection("users")
+        await FirebaseFirestore.instance.collection("users")
             .doc(firebaseUser.uid)
             .set({
               "uid": firebaseUser.uid,
@@ -62,17 +62,35 @@ class _LoginState extends State<Login> {
               "email": firebaseUser.email,
               "phoneNumber": firebaseUser.phoneNumber,
               "emailVerified": firebaseUser.emailVerified,
-              "imageUrl": firebaseUser.photoURL
+              "imageUrl": firebaseUser.photoURL,
+              "cart": [],
             });
         await preferences.setString("uid", firebaseUser.uid);
         await preferences.setString("name", firebaseUser.displayName);
+        await preferences.setString("email", firebaseUser.email);
+        await preferences.setString("phoneNumber", firebaseUser.phoneNumber);
+        await preferences.setBool("emailVerified", firebaseUser.emailVerified);
         await preferences.setString("imageUrl", firebaseUser.photoURL);
+        await preferences.setStringList("cart", []);
       } else {
         await preferences.setString("uid", documents[0]['uid']);
         await preferences.setString("name", documents[0]['name']);
+        await preferences.setString("email", documents[0]['email']);
+        await preferences.setString("phoneNumber", documents[0]['phoneNumber']);
+        await preferences.setBool("emailVerified", documents[0]['emailVerified']);
         await preferences.setString("imageUrl", documents[0]['imageUrl']);
+        await preferences.setStringList("cart", []);
       }
       print("DEBUGEAR LOGIN: Login was successful");
+      /*
+      if (mounted) {
+        setState(() {
+          loading:
+          false;
+        });
+      }
+       */
+      /*
       if (mounted) {
         setState(() {
           loading:
@@ -85,6 +103,7 @@ class _LoginState extends State<Login> {
             )
         );
       }
+       */
     } else {
       print("DEBUGEAR LOGIN: Login failed :(");
     }

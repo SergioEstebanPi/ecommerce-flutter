@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerceapp/models/product.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 
 class ProductServices {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -32,13 +33,19 @@ class ProductServices {
     return _firestore
         .collection(ref)
         .orderBy("name")
-        .startAt([searchKey])
-        .endAt([searchKey + '\uf8ff'])
+        //.startAt([searchKey])
+        //.endAt([searchKey + '\uf8ff'])
         .get()
         .then((result) {
       List<ProductModel> products = [];
       for (DocumentSnapshot product in result.docs) {
-        products.add(ProductModel.fromSnapshot(product));
+        ProductModel productObj = ProductModel.fromSnapshot(product);
+        if(
+          (productObj.name != null && productObj.name.contains(searchKey))
+            || (productObj.description != null && productObj.description.contains(searchKey))
+        ) {
+          products.add(productObj);
+        }
       }
       return products;
     });
